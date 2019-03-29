@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Book extends Component {
     render() {
-        const authors = this.props.bookData.volumeInfo.authors.join(", ");
+        const authors = this.props.bookData.volumeInfo.hasOwnProperty("authors") ? this.props.bookData.volumeInfo.authors.join(", ") : "No author";
 
         const price = this.props.bookData.saleInfo.hasOwnProperty('retailPrice') ? this.props.bookData.saleInfo.retailPrice.amount : "No price available";
 

@@ -7,10 +7,10 @@ class FilterBar extends Component {
             <div className="FilterBar">
                 <form>
                     <label htmlFor="print-type">Print Type: </label>
-                    <select id="print-type" name="print-type" onChange={(e) => this.props.handlePrintChange(e.target.value)}>
+                    <select id="print-type" name="print-type" onChange={e => this.props.handlePrintChange(e.target.value)}>
                         <option value="ALL">All</option>
-                        <option value="BOOKS">Books</option>
-                        <option value="MAGAZINES">Magazines</option>
+                        <option value="BOOK">Books</option>
+                        <option value="MAGAZINE">Magazines</option>
                     </select>
                     <label htmlFor="book-type">Book Type: </label>
                     <select id="book-type" name="book-type">

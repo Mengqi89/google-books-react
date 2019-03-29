@@ -35,14 +35,16 @@ class GoogleBooksApp extends Component {
 
     }
 
-    filterPrint = (printType) => {
-        const newBooks = [];
-        for (let i=0; i < this.state.books.length; i++) {
-            if (this.state.books[i].volumeInfo.hasOwnProperty('printType')) {
-                if (this.state.books[i].volumeInfo.printType === printType)
-                newBooks.push(this.state.books[i])
-            } 
-        }
+
+    filterPrint = (type) => {
+        // console.log(this.state.books[0].volumeInfo.printType);
+
+        const newBooks = this.state.books.filter(item => {
+            if (item.volumeInfo.printType === type || type === "ALL") {
+                return true;
+            }
+        })
+        console.log(newBooks);
 
         this.setState({
             books: newBooks
