@@ -13,7 +13,7 @@ class FilterBar extends Component {
                         <option value="MAGAZINE">Magazines</option>
                     </select>
                     <label htmlFor="book-type">Book Type: </label>
-                    <select id="book-type" name="book-type">
+                    <select id="book-type" name="book-type" onChange={e => this.props.handleBookTypeChange(e.target.value)}>
                         <option value="none">No Filter</option>
                         <option value="not-ebook">Print Only</option>
                         <option value="ebook">Ebook</option>

@@ -7,6 +7,8 @@ class GoogleBooksApp extends Component {
     state = {
         books: [],
         loading: false,
+        printType: "ALL",
+        // bookType: 
     }
 
     handleSubmit = (e, input) => {
@@ -14,7 +16,6 @@ class GoogleBooksApp extends Component {
             loading: true
         })
         e.preventDefault();
-        console.log(input);
 
         const url =`https://www.googleapis.com/books/v1/volumes?q=${input}`;
 
@@ -26,7 +27,7 @@ class GoogleBooksApp extends Component {
                 return res.json();
             })
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 this.setState({
                     books: data.items,
                     loading: false
@@ -35,21 +36,26 @@ class GoogleBooksApp extends Component {
 
     }
 
+    getPrintType = (type) => {
 
-    filterPrint = (type) => {
-        // console.log(this.state.books[0].volumeInfo.printType);
-
-        const newBooks = this.state.books.filter(item => {
-            if (item.volumeInfo.printType === type || type === "ALL") {
-                return true;
-            }
-        })
-        console.log(newBooks);
-
+        // const newBooks = this.state.books.filter(item => {
+        //     if (item.volumeInfo.printType === this.props.printType || this.props.printType === "ALL") {
+        //         return true;
+        //     }
+        // })
+       
+        console.log(type);
         this.setState({
-            books: newBooks
+            printType: type
         })
-    }
+    };
+
+    // filterBook = (type) => {
+    //     console.log("hello")
+    //     console.log(type)
+    //     console.log(this.state.books[0].saleInfo.isEbook)
+    //     // const newBooks = this.state.books.
+    // };
 
     render() {
         const loading = this.state.loading
@@ -60,9 +66,14 @@ class GoogleBooksApp extends Component {
             <div className="GoogleBooksApp">
                 <h1>Google Books Search</h1>
                 <SearchBar handleSubmit={this.handleSubmit} />
-                <FilterBar handlePrintChange={this.filterPrint}/>
+                <FilterBar 
+                handlePrintChange={this.getPrintType}
+                handleBookTypeChange={this.filterBook}
+                />
                 {loading}
-                <BooksList list={this.state.books} />
+                <BooksList
+                list={this.state.books}
+                printType={this.state.printType} />
             </div>
         );
     }
