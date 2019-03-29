@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Book.css';
 
 class Book extends Component {
     render() {
@@ -12,19 +13,29 @@ class Book extends Component {
         return (
             <div className="Book">
                 <h2>{this.props.bookData.volumeInfo.title}</h2>
-                <div className="image">
-                    {image}
+                <div className="book_info">
+                    <div className="book_image">
+                        {image}
+                    </div>
+                    <div className="book_info_text">
+                        <div className="info">
+                            Author: {authors} <br />
+                            Price: {price}
+                        </div>
+                        <div className="book_description">
+                            {this.props.bookData.volumeInfo.description}
+                        </div>
+                    </div>
+                    
                 </div>
-                <div className="info">
-                    Author: {authors} <br/>
-                    Price: {price}
-                </div>
-                <div className="book_description">
-                    {this.props.bookData.volumeInfo.description}
-                </div>
+                    
             </div>
         );
     }
 }
+
+Book.defaultProps = {
+    bookData: []
+};
 
 export default Book;

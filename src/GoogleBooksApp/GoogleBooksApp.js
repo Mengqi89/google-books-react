@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './GoogleBooksApp.css';
 import SearchBar from '../SearchBar/SearchBar';
 import FilterBar from '../FilterBar/FilterBar';
 import BooksList from '../BooksList/BooksList';
@@ -6,15 +7,14 @@ import BooksList from '../BooksList/BooksList';
 class GoogleBooksApp extends Component {
     state = {
         books: [],
+        printTypeFilter: "All",
+        bookTypeFilter: "none",
         loading: false,
     }
 
     handleSubmit = (e, input) => {
-        this.setState({
-            loading: true
-        })
         e.preventDefault();
-        console.log(input);
+        this.setState({ loading: true });
 
         const url =`https://www.googleapis.com/books/v1/volumes?q=${input}`;
 
@@ -26,26 +26,31 @@ class GoogleBooksApp extends Component {
                 return res.json();
             })
             .then(data => {
-                console.log(data)
+                
                 this.setState({
                     books: data.items,
                     loading: false
                 })
             })
-
     }
 
-    filterPrint = (printType) => {
-        const newBooks = [];
-        for (let i=0; i < this.state.books.length; i++) {
-            if (this.state.books[i].volumeInfo.hasOwnProperty('printType')) {
-                if (this.state.books[i].volumeInfo.printType === printType)
-                newBooks.push(this.state.books[i])
-            } 
-        }
-
+    updatePrintFilter = (printType) => {
         this.setState({
-            books: newBooks
+            printTypeFilter: printType
+        })
+    }
+
+    updateEBookFilter = (ebook) => {
+        let filter = '';
+        if (ebook === 'none') {
+            filter = 'none';
+        } else if (ebook === 'ebook') {
+            filter = true;
+        } else {
+            filter = false;
+        }
+        this.setState({
+            bookTypeFilter: filter
         })
     }
 
@@ -54,13 +59,23 @@ class GoogleBooksApp extends Component {
             ? <div>Loading...</div>
             : '';
 
+        const { printTypeFilter, bookTypeFilter } = this.state;
+
         return (
             <div className="GoogleBooksApp">
-                <h1>Google Books Search</h1>
+                <header>
+                    <h1>Google Books Search</h1>
+                </header>
+                
                 <SearchBar handleSubmit={this.handleSubmit} />
-                <FilterBar handlePrintChange={this.filterPrint}/>
+                <FilterBar 
+                    handlePrintChange={this.updatePrintFilter}
+                    handleEBookChange={this.updateEBookFilter}/>
                 {loading}
-                <BooksList list={this.state.books} />
+                <BooksList 
+                    list={this.state.books}
+                    printTypeFilter={printTypeFilter}
+                    bookTypeFilter={bookTypeFilter} />
             </div>
         );
     }

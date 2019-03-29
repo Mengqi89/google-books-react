@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import Book from '../Book/Book'
 
 class BooksList extends Component {
+
     render() {
-        const books = this.props.list.map(book => {
+        const { printTypeFilter, bookTypeFilter } = this.props;
+        const books = this.props.list
+            .filter(book => (printTypeFilter === 'All' || book.volumeInfo.printType === printTypeFilter) && (
+                bookTypeFilter === 'none' || book.saleInfo.isEbook === bookTypeFilter
+            ))
+            .map(book => {
             return <Book bookData={book} key={book.id}/>
         })
+
+        console.log(books.length)
 
         return (
             <div className="BookList">
@@ -14,5 +22,9 @@ class BooksList extends Component {
         );
     }
 }
+
+BooksList.defaultProps = {
+    list: []
+};
 
 export default BooksList;

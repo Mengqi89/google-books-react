@@ -1,0 +1,8 @@
+.SearchBar {
+    background-color: rgb(119, 117, 117);
+    padding: 5px 0;
+}
+
+.SearchBar button {
+    padding: 0 4px;
+}
