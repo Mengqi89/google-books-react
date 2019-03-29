@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 
 class FilterBar extends Component {
+
     render() {
         return (
             <div className="FilterBar">
                 <form>
                     <label htmlFor="print-type">Print Type: </label>
-                    <select id="print-type" name="print-type">
-                        <option value="all">All</option>
-                        <option value="books">Books</option>
-                        <option value="magazines">Magazines</option>
+                    <select id="print-type" name="print-type" onChange={(e) => this.props.handlePrintChange(e.target.value)}>
+                        <option value="ALL">All</option>
+                        <option value="BOOKS">Books</option>
+                        <option value="MAGAZINES">Magazines</option>
                     </select>
                     <label htmlFor="book-type">Book Type: </label>
                     <select id="book-type" name="book-type">

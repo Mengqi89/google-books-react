@@ -6,7 +6,7 @@ import BooksList from '../BooksList/BooksList';
 class GoogleBooksApp extends Component {
     state = {
         books: [],
-        loading: false
+        loading: false,
     }
 
     handleSubmit = (e, input) => {
@@ -28,10 +28,25 @@ class GoogleBooksApp extends Component {
             .then(data => {
                 console.log(data)
                 this.setState({
+                    books: data.items,
                     loading: false
                 })
             })
 
+    }
+
+    filterPrint = (printType) => {
+        const newBooks = [];
+        for (let i=0; i < this.state.books.length; i++) {
+            if (this.state.books[i].volumeInfo.hasOwnProperty('printType')) {
+                if (this.state.books[i].volumeInfo.printType === printType)
+                newBooks.push(this.state.books[i])
+            } 
+        }
+
+        this.setState({
+            books: newBooks
+        })
     }
 
     render() {
@@ -43,9 +58,9 @@ class GoogleBooksApp extends Component {
             <div className="GoogleBooksApp">
                 <h1>Google Books Search</h1>
                 <SearchBar handleSubmit={this.handleSubmit} />
-                <FilterBar />
+                <FilterBar handlePrintChange={this.filterPrint}/>
                 {loading}
-                <BooksList />
+                <BooksList list={this.state.books} />
             </div>
         );
     }
