@@ -8,7 +8,7 @@ class GoogleBooksApp extends Component {
         books: [],
         loading: false,
         printType: "ALL",
-        // bookType: 
+        bookType: "none"
     }
 
     handleSubmit = (e, input) => {
@@ -38,24 +38,17 @@ class GoogleBooksApp extends Component {
 
     getPrintType = (type) => {
 
-        // const newBooks = this.state.books.filter(item => {
-        //     if (item.volumeInfo.printType === this.props.printType || this.props.printType === "ALL") {
-        //         return true;
-        //     }
-        // })
-       
-        console.log(type);
         this.setState({
             printType: type
         })
     };
 
-    // filterBook = (type) => {
-    //     console.log("hello")
-    //     console.log(type)
-    //     console.log(this.state.books[0].saleInfo.isEbook)
-    //     // const newBooks = this.state.books.
-    // };
+    getBookType = (type) => {
+
+        this.setState({
+            bookType: type
+        })
+    };
 
     render() {
         const loading = this.state.loading
@@ -68,12 +61,13 @@ class GoogleBooksApp extends Component {
                 <SearchBar handleSubmit={this.handleSubmit} />
                 <FilterBar 
                 handlePrintChange={this.getPrintType}
-                handleBookTypeChange={this.filterBook}
+                handleBookTypeChange={this.getBookType}
                 />
                 {loading}
                 <BooksList
                 list={this.state.books}
-                printType={this.state.printType} />
+                printType={this.state.printType}
+                bookType={this.state.bookType} />
             </div>
         );
     }
